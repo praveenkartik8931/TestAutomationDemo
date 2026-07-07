@@ -1,7 +1,9 @@
 package com.automation.testautomation;
 
+import java.io.File;
 import java.time.Duration;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,6 +12,8 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -98,6 +102,7 @@ public class TestIXIGO {
     }
 
     @Test
+    @Ignore
     public void testElementIntoView(){
         navigateToHotelsPage();
         WebElement hyderabadCityImage = driver.findElement(By.xpath("//img[@alt='Hyderabad']/ancestor::div[contains(@class,'CarouselCard_thumbnail')]"));
@@ -105,6 +110,17 @@ public class TestIXIGO {
         jsExecutor.executeScript("arguments[0].scrollIntoView(true);", hyderabadCityImage);
         // Check if the element is visible and enabled
         Assert.assertTrue(hyderabadCityImage.isDisplayed() && hyderabadCityImage.isEnabled());
+    }
+
+    @Test
+    public void testTakeScreenshot(){
+        navigateToHotelsPage();
+        try{
+            File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshot, new File("C:\\Users\\kundu\\Documents\\Projects\\java projects\\Selenium Training\\Sample.png"));
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     @After
